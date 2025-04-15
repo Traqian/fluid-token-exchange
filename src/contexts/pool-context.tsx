@@ -8,7 +8,8 @@ import {
   calculateRequiredAmounts, 
   executeAddLiquidity, 
   calculateRemoveLiquidity, 
-  executeRemoveLiquidity 
+  executeRemoveLiquidity,
+  calculateLPTokensMinted 
 } from '@/lib/amm';
 import { useWallet } from './wallet-context';
 import { toast } from 'sonner';

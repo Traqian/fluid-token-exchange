@@ -1,6 +1,5 @@
-
-import { Pool } from './types';
 import { parseEther, formatEther } from 'ethers';
+import { Pool } from './types';
 
 // Calculate the amount of output token given an input amount
 export function calculateSwapOutput(
@@ -19,7 +18,7 @@ export function calculateSwapOutput(
     
     // Calculate fee amount
     const feeMultiplier = 1 - pool.fee / 100;
-    const inputAmountWithFee = inputAmountBN.mul(Math.floor(feeMultiplier * 1000)).div(1000);
+    const inputAmountWithFee = inputAmountBN * BigInt(Math.floor(feeMultiplier * 1000)) / 1000n;
     
     // Apply constant product formula: x * y = k
     // (x + dx) * (y - dy) = k
@@ -28,10 +27,10 @@ export function calculateSwapOutput(
     // dy = y * (1 - x / (x + dx * feeMultiplier))
     // dy = y * (dx * feeMultiplier) / (x + dx * feeMultiplier)
     
-    const numerator = inputAmountWithFee.mul(outputBalance);
-    const denominator = inputBalance.add(inputAmountWithFee);
+    const numerator = inputAmountWithFee * outputBalance;
+    const denominator = inputBalance + inputAmountWithFee;
     
-    const outputAmount = numerator.div(denominator);
+    const outputAmount = numerator / denominator;
     
     return formatEther(outputAmount);
   } catch (error) {
