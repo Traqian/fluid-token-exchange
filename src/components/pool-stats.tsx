@@ -8,11 +8,13 @@ const PoolStats = () => {
   const { pool } = usePool();
   
   return (
-    <Card className="bg-card/30 backdrop-blur-xl border shadow-lg">
+    <Card className="bg-card/30 backdrop-blur-xl border shadow-lg hover-scale">
       <CardHeader className="pb-3">
         <CardTitle className="text-lg font-bold flex items-center gap-2">
           <LayersIcon className="w-5 h-5 text-defi-purple" />
-          Pool Statistics
+          <span className="bg-gradient-to-r from-defi-purple to-defi-blue bg-clip-text text-transparent">
+            Pool Statistics
+          </span>
         </CardTitle>
       </CardHeader>
       <CardContent>
