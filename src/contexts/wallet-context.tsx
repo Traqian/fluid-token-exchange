@@ -40,61 +40,44 @@ export const WalletProvider: React.FC<{ children: ReactNode }> = ({ children }) 
 
   // Connect to MetaMask wallet
   const connectWallet = async () => {
-    try {
-      console.log("Attempting to connect wallet...");
-      
-      // Check if MetaMask is installed
-      if (!checkIfMetaMaskIsInstalled()) {
-        console.log("MetaMask not installed");
-        setWalletState({
-          status: WalletConnectionStatus.Error,
-          error: "MetaMask is not installed",
-        });
-        toast.error("MetaMask is not installed. Please install MetaMask to connect.");
-        return;
-      }
+    // Check if MetaMask is installed
+    if (!checkIfMetaMaskIsInstalled()) {
+      setWalletState({
+        status: WalletConnectionStatus.Error,
+        error: "MetaMask is not installed",
+      });
+      toast.error("MetaMask is not installed. Please install MetaMask to connect.");
+      return;
+    }
 
+    try {
       setWalletState({ status: WalletConnectionStatus.Connecting });
-      console.log("Setting connecting state");
       
       const { ethereum } = window as any;
+      const accounts = await ethereum.request({ method: "eth_requestAccounts" });
       
-      try {
-        console.log("Requesting accounts...");
-        const accounts = await ethereum.request({ method: "eth_requestAccounts" });
-        
-        if (accounts.length === 0) {
-          throw new Error("No accounts found");
-        }
-        
-        const address = accounts[0];
-        const chainId = await ethereum.request({ method: "eth_chainId" });
-        
-        console.log("Wallet connected:", address);
-        
-        setWalletState({
-          status: WalletConnectionStatus.Connected,
-          address,
-          chainId,
-        });
-        
-        // In a real app, we would fetch actual token balances
-        // For this demo, we'll use mock balances
-        setUserBalances({
-          alphaBalance: MOCK_WALLET.alphaBalance,
-          betaBalance: MOCK_WALLET.betaBalance,
-          lpTokenBalance: MOCK_WALLET.lpTokenBalance,
-        });
-        
-        toast.success("Wallet connected successfully!");
-      } catch (innerError: any) {
-        console.error("Error requesting accounts:", innerError);
-        setWalletState({
-          status: WalletConnectionStatus.Error,
-          error: innerError.message,
-        });
-        toast.error(`Failed to connect wallet: ${innerError.message}`);
+      if (accounts.length === 0) {
+        throw new Error("No accounts found");
       }
+      
+      const address = accounts[0];
+      const chainId = await ethereum.request({ method: "eth_chainId" });
+      
+      setWalletState({
+        status: WalletConnectionStatus.Connected,
+        address,
+        chainId,
+      });
+      
+      // In a real app, we would fetch actual token balances
+      // For this demo, we'll use mock balances
+      setUserBalances({
+        alphaBalance: MOCK_WALLET.alphaBalance,
+        betaBalance: MOCK_WALLET.betaBalance,
+        lpTokenBalance: MOCK_WALLET.lpTokenBalance,
+      });
+      
+      toast.success("Wallet connected successfully!");
     } catch (error: any) {
       console.error("Error connecting wallet:", error);
       setWalletState({
@@ -107,7 +90,6 @@ export const WalletProvider: React.FC<{ children: ReactNode }> = ({ children }) 
 
   // Disconnect wallet
   const disconnectWallet = () => {
-    console.log("Disconnecting wallet");
     setWalletState({ status: WalletConnectionStatus.Disconnected });
     setUserBalances({
       alphaBalance: "0",

@@ -18,7 +18,7 @@ const Index = () => {
           
           <main className="flex-grow container py-8 relative">
             <div className="text-center space-y-4 mb-10">
-              <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-defi-purple to-defi-blue bg-clip-text text-transparent drop-shadow-sm">
+              <h1 className="text-4xl font-bold bg-gradient-to-r from-defi-purple to-defi-blue bg-clip-text text-transparent">
                 DeFi Swap Platform
               </h1>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -28,7 +28,7 @@ const Index = () => {
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
               <div className="md:col-span-2">
-                <div className="bg-card/20 backdrop-blur-xl border shadow-lg rounded-lg p-6 hover-scale">
+                <div className="bg-card/30 backdrop-blur-xl border shadow-lg rounded-lg p-6">
                   <OperationTabs />
                 </div>
               </div>
