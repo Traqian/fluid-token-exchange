@@ -15,11 +15,25 @@ const WalletConnectButton = () => {
     return `${address.slice(0, 6)}...${address.slice(-4)}`;
   };
   
+  const handleConnectClick = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (!isConnected && !isConnecting) {
+      await connectWallet();
+    }
+  };
+  
+  const handleDisconnectClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (isConnected) {
+      disconnectWallet();
+    }
+  };
+  
   return (
     <div>
       {!isConnected ? (
         <Button
-          onClick={connectWallet}
+          onClick={handleConnectClick}
           disabled={isConnecting}
           className="bg-gradient-to-r from-defi-purple to-defi-blue hover:opacity-90 text-white"
         >
@@ -34,7 +48,7 @@ const WalletConnectButton = () => {
           <Button 
             variant="outline" 
             size="icon" 
-            onClick={disconnectWallet}
+            onClick={handleDisconnectClick}
             aria-label="Disconnect wallet"
           >
             <LogOut className="w-4 h-4" />

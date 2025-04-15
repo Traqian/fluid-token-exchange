@@ -11,18 +11,24 @@ const Index = () => {
   return (
     <WalletProvider>
       <PoolProvider>
-        <div className="min-h-screen flex flex-col">
+        <div className="min-h-screen flex flex-col bg-gradient-to-b from-background via-background to-background/80">
+          <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]" />
+          
           <Header />
           
-          <main className="flex-grow container py-6">
-            <h1 className="text-3xl font-bold text-center mb-2">DeFi Swap Platform</h1>
-            <p className="text-center text-muted-foreground mb-8">
-              Swap, add liquidity, and earn fees on Alpha and Beta tokens
-            </p>
+          <main className="flex-grow container py-8 relative">
+            <div className="text-center space-y-4 mb-10">
+              <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-defi-purple to-defi-blue bg-clip-text text-transparent drop-shadow-sm">
+                DeFi Swap Platform
+              </h1>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Fast and secure token swaps with optimal rates. Trade Alpha and Beta tokens with minimal slippage.
+              </p>
+            </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
               <div className="md:col-span-2">
-                <div className="bg-card rounded-lg p-6 swap-card">
+                <div className="bg-card/20 backdrop-blur-xl border shadow-lg rounded-lg p-6 hover-scale">
                   <OperationTabs />
                 </div>
               </div>
